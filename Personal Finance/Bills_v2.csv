@@ -1,0 +1,102 @@
+Date,Month,Payment_for,Payment_to,Payment_from,Payment_amount
+1/1/2023,1,Auto Insurance,USAA,Checking 5868,74.57
+1/1/2023,1,Renters Insurance,USAA,Checking 5868,9.23
+2/1/2023,2,Auto Insurance,USAA,Checking 5868,88.24
+2/1/2023,2,Renters Insurance,USAA,Checking 5868,10.92
+2/28/2023,2,Phone,Verizon,Checking 5868,38
+3/1/2023,3,Auto Insurance,USAA,Checking 5868,100.78
+3/1/2023,3,Renters Insurance,USAA,Checking 5868,10.92
+3/17/2023,3,Home Insurance,USAA,Checking 5868,1272.42
+3/31/2023,3,Phone,Verizon,Checking 5868,38
+4/1/2023,4,Auto Insurance,USAA,Checking 5868,100.08
+4/4/2023,4,Wifi,Signal Sphere Services,Checking 5868,47.99
+5/1/2023,5,Auto Insurance,USAA,Checking 5868,95.47
+5/1/2023,5,Mortgage,Stellar Key,Checking 5868,1988.87
+5/1/2023,5,Phone,Verizon,Checking 5868,38
+5/3/2023,5,Sewer,Drain Dynamo,Checking 5868,36.36
+5/8/2023,5,Water,Hydro Harmony,Checking 5868,36.69
+5/8/2023,5,Wifi,Signal Sphere Services,Checking 5868,10
+5/16/2023,5,Wifi,Signal Sphere Services,Checking 5868,21.86
+5/23/2023,5,Entertainment,Piano,Credit Card 1074,495
+5/31/2023,5,Electricity,Volt Energy Solutions,Checking 5868,1.66
+5/31/2023,5,Phone,Verizon,Checking 5868,38
+5/31/2023,5,Sewer,Drain Dynamo,Checking 5868,38
+6/1/2023,6,Auto Insurance,USAA,Checking 5868,95.47
+6/1/2023,6,Mortgage,Stellar Key,Checking 5868,1988.87
+6/5/2023,6,Water,Hydro Harmony,Checking 5868,20.65
+6/6/2023,6,Wifi,Signal Sphere Services,Checking 5868,36.13
+6/8/2023,6,Sewer,Drain Dynamo,Checking 5868,24.91
+6/30/2023,6,Phone,Verizon,Checking 5868,38
+7/1/2023,7,Auto Insurance,USAA,Checking 5868,95.47
+7/3/2023,7,Electricity,Volt Energy Solutions,Checking 5868,103.78
+7/5/2023,7,Mortgage,Stellar Key,Checking 5868,1988.87
+7/5/2023,7,Water,Hydro Harmony,Checking 5868,21.02
+7/10/2023,7,Wifi,Signal Sphere Services,Checking 5868,57.99
+7/13/2023,7,Sewer,Drain Dynamo,Checking 5868,24.91
+7/31/2023,7,Phone,Verizon,Checking 5868,38
+8/1/2023,8,Auto Insurance,USAA,Checking 5868,95.46
+8/1/2023,8,Electricity,Volt Energy Solutions,Checking 5868,91.8
+8/1/2023,8,Mortgage,Stellar Key,Checking 5868,1988.87
+8/7/2023,8,Water,Hydro Harmony,Checking 5868,21.22
+8/7/2023,8,Wifi,Signal Sphere Services,Checking 5868,57.99
+8/9/2023,8,Entertainment,Netflix,Credit Card 1074,16.96
+8/10/2023,8,Sewer,Drain Dynamo,Checking 5868,24.91
+8/31/2023,8,Electricity,Volt Energy Solutions,Checking 5868,88.39
+9/1/2023,9,Auto Insurance,USAA,Checking 5868,119.09
+9/1/2023,9,Mortgage,Stellar Key,Checking 5868,1988.87
+9/6/2023,9,Wifi,Signal Sphere Services,Checking 5868,57.99
+9/9/2023,9,Entertainment,Netflix,Credit Card 1074,16.96
+9/11/2023,9,Water,Hydro Harmony,Checking 5868,20.98
+9/14/2023,9,Sewer,Drain Dynamo,Checking 5868,24.91
+10/1/2023,10,Auto Insurance,USAA,Checking 5868,119.09
+10/2/2023,10,Electricity,Volt Energy Solutions,Checking 5868,82.77
+10/2/2023,10,Mortgage,Stellar Key,Checking 5868,1988.87
+10/6/2023,10,Wifi,Signal Sphere Services,Checking 5868,57.99
+10/9/2023,10,Entertainment,Netflix,Credit Card 1074,16.96
+10/11/2023,10,Water,Hydro Harmony,Checking 5868,20.79
+10/12/2023,10,Sewer,Drain Dynamo,Checking 5868,24.91
+11/1/2023,11,Auto Insurance,USAA,Checking 5868,124.17
+11/1/2023,11,Electricity,Volt Energy Solutions,Checking 5868,45.66
+11/1/2023,11,Entertainment,Climbing,Credit Card 1074,40
+11/1/2023,11,Mortgage,Stellar Key,Checking 5868,1988.87
+11/3/2023,11,Entertainment,Climbing,Credit Card 1074,95
+11/4/2023,11,Entertainment,Xbox,Credit Card 1074,18.56
+11/6/2023,11,Water,Hydro Harmony,Checking 5868,20.23
+11/7/2023,11,Wifi,Signal Sphere Services,Checking 5868,57.99
+11/9/2023,11,Entertainment,Netflix,Credit Card 1074,16.96
+11/9/2023,11,Sewer,Drain Dynamo,Checking 5868,25.5
+12/1/2023,12,Auto Insurance,USAA,Checking 5868,124.17
+12/4/2023,12,Electricity,Volt Energy Solutions,Checking 5868,42.47
+12/4/2023,12,Entertainment,Xbox,Credit Card 1074,16.99
+12/5/2023,12,Water,Hydro Harmony,Checking 5868,20.58
+12/6/2023,12,Mortgage,Stellar Key,Checking 5868,1988.87
+12/7/2023,12,Wifi,Signal Sphere Services,Checking 5868,57.99
+12/9/2023,12,Entertainment,Netflix,Credit Card 1074,16.96
+12/18/2023,12,Sewer,Drain Dynamo,Checking 5868,26.41
+12/28/2023,12,Entertainment,Climbing,Credit Card 1074,95
+1/1/2024,1,Auto Insurance,USAA,Checking 5868,102.79
+1/2/2024,1,Electricity,Volt Energy Solutions,Checking 5868,68.82
+1/2/2024,1,Mortgage,Stellar Key,Checking 5868,1988.87
+1/4/2024,1,Water,Hydro Harmony,Checking 5868,21.39
+1/4/2024,1,Wifi,Signal Sphere Services,Checking 5868,57.99
+1/9/2024,1,Entertainment,Netflix,Credit Card 1074,16.96
+1/11/2024,1,Sewer,Drain Dynamo,Checking 5868,35.98
+1/22/2024,1,Phone,Verizon,Checking 5868,227
+2/1/2024,2,Auto Insurance,USAA,Checking 5868,102.79
+2/1/2024,2,Electricity,Volt Energy Solutions,Checking 5868,142.26
+2/1/2024,2,Mortgage,Stellar Key,Checking 5868,1988.87
+2/5/2024,2,Water,Hydro Harmony,Checking 5868,70.97
+2/7/2024,2,Wifi,Signal Sphere Services,Checking 5868,57.99
+2/8/2024,2,Sewer,Drain Dynamo,Checking 5868,115.65
+2/9/2024,2,Entertainment,Netflix,Credit Card 1074,16.96
+2/21/2024,2,Home Insurance,USAA,Checking 5868,1240.61
+3/1/2024,3,Auto Insurance,USAA,Checking 5868,120.22
+3/1/2024,3,Electricity,Volt Energy Solutions,Checking 5868,217.97
+3/4/2024,3,Entertainment,Climbing,Checking 5868,84
+3/4/2024,3,Mortgage,Stellar Key,Checking 5868,1988.87
+3/4/2024,3,Water,Hydro Harmony,Checking 5868,132.71
+3/7/2024,3,Sewer,Drain Dynamo,Checking 5868,154.2
+3/7/2024,3,Wifi,Signal Sphere Services,Checking 5868,57.99
+3/9/2024,3,Entertainment,Netflix,Credit Card 1074,16.96
+3/17/2024,3,Entertainment,Climbing,Credit Card 0000,6.5
+3/18/2024,3,Phone,Verizon,Checking 5868,34
