@@ -23,6 +23,13 @@ conn = get_connection()
 if conn.closed:
     conn = get_connection()
 
+# --- Fidgets ---
+st.segmented_control("Filter", ["Open", "Closed"])
+st.pills("Domain", ["Groceries", "Bills", "Invetments"])
+# st.feedback("thumbs")
+st.button("Insert Data")
+# st.toggle("Enable")
+
 # --- Page layout ---
 st.title("📊 Grocery Habits")
 
