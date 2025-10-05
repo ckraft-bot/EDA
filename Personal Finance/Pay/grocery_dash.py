@@ -8,8 +8,6 @@ from finance_dash import conn
 
 # --- Page layout ---
 def app(conn):
-    st.title("📊 Grocery Habits")
-
     # --- Query for dynamic filter options ---
     query_years = """
         SELECT DISTINCT EXTRACT(YEAR FROM date)::INT AS year

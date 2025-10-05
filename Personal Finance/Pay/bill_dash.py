@@ -7,4 +7,4 @@ import plotly.graph_objects as go
 from finance_dash import conn
 
 def app(conn):
-    st.title("📊 Bills")
+    st.empty()
