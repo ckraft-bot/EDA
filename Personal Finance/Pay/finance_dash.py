@@ -24,11 +24,10 @@ if conn.closed:
     conn = get_connection()
 
 # --- Fidgets ---
-st.segmented_control("Filter", ["Open", "Closed"])
 st.pills("Domain", ["Groceries", "Bills", "Invetments"])
 # st.feedback("thumbs")
 st.button("Insert Data")
-# st.toggle("Enable")
+
 
 # --- Page layout ---
 st.title("📊 Grocery Habits")
@@ -45,7 +44,7 @@ query_stores = """
     ORDER BY store;
 """
 
-years = pd.read_sql(query_years, conn)['year'].tolist()
+# years = pd.read_sql(query_years, conn)['year'].tolist()
 stores = pd.read_sql(query_stores, conn)['store'].dropna().tolist()
 
 # --- Filters on top ---
@@ -54,7 +53,6 @@ stores = pd.read_sql(query_stores, conn)['store'].dropna().tolist()
 
 # with col1:
 #     year_filter = st.multiselect("Select Year", options=years)
-
 # with col2:
 #     store_filter = st.multiselect("Select Store(s)", options=stores, default=stores)
 
@@ -70,6 +68,7 @@ query_popular_stores = """
         MAX(date) AS last_visit,
         SUM(money_spent) AS total_spent_here
     FROM main_schema."grocery_expenses"
+    --WHERE store = ANY(%s)
     GROUP BY store
     ORDER BY visit_count DESC;
 """
@@ -112,6 +111,7 @@ query_yoy = """
         ROUND(AVG(money_spent), 2) AS avg_spent,
         SUM(money_spent) AS total_spent
     FROM main_schema."grocery_expenses"
+    --WHERE store = ANY(%s)
     GROUP BY year
     ORDER BY year;
 """
@@ -179,6 +179,7 @@ st.plotly_chart(fig_yoy, use_container_width=True)
 
 # --- SECTION 3: Monthly spending habits YOY ---
 st.markdown("## 📆 Monthly Spending Trends by Year")
+
 query_monthly = """
     SELECT
         EXTRACT(YEAR FROM date) AS year,
@@ -186,6 +187,7 @@ query_monthly = """
         SUM(money_spent) AS total_spent,
         ROUND(AVG(money_spent), 2) AS avg_spent
     FROM main_schema."grocery_expenses"
+    --WHERE store = ANY(%s)
     GROUP BY year, month
     ORDER BY month, year;
 """
@@ -199,31 +201,5 @@ fig_monthly = px.line(
     title="Monthly Spending YOY",
 )
 st.plotly_chart(fig_monthly, use_container_width=True)
-
-
-# --- SECTION 4: Monthly spending by store (year-over-year) ---
-# st.markdown("## 🛒 Monthly Spending by Store (YOY)")
-# query_store_yoy = """
-#     SELECT
-#         store,
-#         EXTRACT(YEAR FROM date) AS year,
-#         month,
-#         SUM(money_spent) AS total_spent,
-#         ROUND(AVG(money_spent), 2) AS avg_spent
-#     FROM main_schema."grocery_expenses"
-#     GROUP BY store, year, month
-#     ORDER BY store, month, year;
-# """
-# df_store_yoy = pd.read_sql(query_store_yoy, conn)
-# fig_store_yoy = px.line(
-#     df_store_yoy,
-#     x="month",
-#     y="total_spent",
-#     color="year",
-#     facet_col="store",
-#     facet_col_wrap=3,
-#     title="Store-by-Store Spending Trends (Year-Over-Year)",
-# )
-# st.plotly_chart(fig_store_yoy, use_container_width=True)
 
 
