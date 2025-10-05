@@ -13,7 +13,7 @@ def investment_dashboard():
     # Today's date
     today = date.today()
 
-    # 5-year lookback
+    # x year lookback
     lookback_years = 1
     lookback_date = date(today.year - lookback_years, today.month, today.day)
 
@@ -30,14 +30,15 @@ def investment_dashboard():
 
     my_stocks = list(etfs.keys())
     benchmark = '^GSPC'  # S&P 500 as reference
-
+    st.write(f"my stocks: {my_stocks} + benchmark")
+    
     # Download historical prices for all tickers + benchmark
-    ech = yf.download(my_stocks + [benchmark], start=lookback_date, end=today)['Adj Close']
+    # ech = yf.download(my_stocks + [benchmark], start=lookback_date, end=today)['Adj Close']
 
-    # Show full table
-    st.dataframe(ech)
+    # # Show full table
+    # st.dataframe(ech)
 
-    # Loop through each ticker individually
-    for ticker in my_stocks:
-        st.subheader(f"{ticker} - {etfs[ticker]}")
-        st.line_chart(ech[[ticker, benchmark]])  # Plot ticker vs S&P 500
+    # # Loop through each ticker individually
+    # for ticker in my_stocks:
+    #     st.subheader(f"{ticker} - {etfs[ticker]}")
+    #     st.line_chart(ech[[ticker, benchmark]])  # Plot ticker vs S&P 500
