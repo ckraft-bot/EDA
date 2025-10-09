@@ -6,8 +6,6 @@ from finance_dash import conn  # ✅ uses the global cached connection
 
 
 def app():
-    st.title("📈 Investment Overview")
-
     today = date.today()
     lookback_years = 1
     lookback_date = date(today.year - lookback_years, today.month, today.day)
