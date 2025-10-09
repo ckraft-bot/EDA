@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import yfinance as yf
 from datetime import date
-from finance_dash import conn  # ✅ uses the global cached connection
+from finance_dash import conn  # Global cached NeonDB connection
 
 
 def app():
@@ -19,19 +19,58 @@ def app():
         'BLOK': 'Amplify Transformational Data Sharing ETF (Blockchain exposure)'
     }
 
-    symbols = list(etfs.keys())
     benchmark = "^GSPC"
-    all_symbols = symbols + [benchmark]
+    all_symbols = list(etfs.keys()) + [benchmark]
 
-    st.write(f"📊 Fetching data for: {', '.join(symbols)} + benchmark ({benchmark})")
+    st.info(f"📊 Fetching data for: {', '.join(all_symbols)}")
 
-    # Download price data
-    data = yf.download(all_symbols, start=lookback_date, end=today)['Adj Close']
+    # --- Download data from Yahoo Finance ---
+    data = yf.download(
+        all_symbols,
+        start=lookback_date,
+        end=today,
+        group_by='ticker',
+        auto_adjust=True,
+        threads=True
+    )
 
-    returns = (data.iloc[-1] / data.iloc[0] - 1) * 100
-    daily_change = (data.iloc[-1] / data.iloc[-2] - 1) * 100
+    # --- Robust extraction of adjusted close ---
+    adj_close = pd.DataFrame()
+    for symbol in all_symbols:
+        try:
+            if isinstance(data.columns, pd.MultiIndex):
+                if 'Adj Close' in data[symbol].columns:
+                    adj_close[symbol] = data[symbol]['Adj Close']
+                elif 'Close' in data[symbol].columns:
+                    adj_close[symbol] = data[symbol]['Close']
+            else:
+                if symbol in data.columns:
+                    adj_close[symbol] = data[symbol]
+                elif 'Adj Close' in data.columns:
+                    adj_close[symbol] = data['Adj Close']
+                elif 'Close' in data.columns:
+                    adj_close[symbol] = data['Close']
+            if adj_close[symbol].isna().all():
+                st.warning(f"No valid data for {symbol}, skipping.")
+                adj_close.drop(columns=symbol, inplace=True)
+        except Exception as e:
+            st.warning(f"Error fetching {symbol}: {e}")
 
-    # --- Create or update table ---
+    # Drop any fully empty columns
+    adj_close = adj_close.dropna(axis=1, how='all')
+    valid_symbols = [s for s in all_symbols if s in adj_close.columns]
+
+    if not valid_symbols:
+        st.error("❌ No valid data returned from Yahoo Finance.")
+        return
+
+    st.success(f"✅ Successfully fetched data for: {', '.join(valid_symbols)}")
+
+    # --- Calculate returns ---
+    returns = (adj_close.iloc[-1] / adj_close.iloc[0] - 1) * 100
+    daily_change = (adj_close.iloc[-1] / adj_close.iloc[-2] - 1) * 100
+
+    # --- Insert/update DB table ---
     with conn.cursor() as cur:
         cur.execute("""
         CREATE TABLE IF NOT EXISTS main_schema.investment_pulse (
@@ -49,19 +88,11 @@ def app():
         );
         """)
 
-        # --- Insert or update each ETF ---
-        for symbol in symbols:
+        for symbol in valid_symbols:
+            if symbol == benchmark:
+                continue  # skip benchmark in DB
             ticker = yf.Ticker(symbol)
             info = ticker.info or {}
-
-            current_price = round(data.iloc[-1][symbol], 2)
-            one_year_return = round(returns[symbol], 2)
-            daily_chg = round(daily_change[symbol], 2)
-            market_cap = info.get("marketCap")
-            pe_ratio = info.get("trailingPE")
-            dividend_yield = info.get("dividendYield")
-            high_52 = info.get("fiftyTwoWeekHigh")
-            low_52 = info.get("fiftyTwoWeekLow")
 
             cur.execute("""
             INSERT INTO main_schema.investment_pulse (
@@ -83,15 +114,23 @@ def app():
                 fifty_two_week_low = EXCLUDED.fifty_two_week_low,
                 last_updated = NOW();
             """, (
-                symbol, etfs[symbol], current_price, one_year_return, daily_chg,
-                market_cap, pe_ratio, dividend_yield, high_52, low_52
+                symbol,
+                etfs.get(symbol, symbol),
+                round(adj_close.iloc[-1][symbol], 2),
+                round(returns[symbol], 2),
+                round(daily_change[symbol], 2),
+                info.get("marketCap"),
+                info.get("trailingPE"),
+                info.get("dividendYield"),
+                info.get("fiftyTwoWeekHigh"),
+                info.get("fiftyTwoWeekLow"),
             ))
 
-        conn.commit()  # ✅ commit after all inserts
+        conn.commit()
 
     st.success("✅ Investment pulse successfully written to NeonDB!")
 
-    # --- Optional: read back results to confirm ---
+    # --- Display table in Streamlit ---
     df = pd.read_sql("SELECT * FROM main_schema.investment_pulse ORDER BY one_year_return DESC;", conn)
     st.dataframe(df)
     st.write("Data last updated:", df['last_updated'].max())
