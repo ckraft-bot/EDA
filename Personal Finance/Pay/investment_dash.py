@@ -1,44 +1,99 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import psycopg2
-import plotly.express as px
-import plotly.graph_objects as go
-# from finance_dash import conn
 import yfinance as yf
-from datetime import date, timedelta
+from datetime import date
+from finance_dash import conn  # ✅ uses the global cached connection
+
 
 def investment_dashboard():
     st.title("📈 Investment Overview")
-    # Today's date
-    today = date.today()
 
-    # x year lookback
+    today = date.today()
     lookback_years = 1
     lookback_date = date(today.year - lookback_years, today.month, today.day)
 
-    st.write(f"5-Year Historical Prices ({lookback_date} to {today})")
-
     etfs = {
         'VOO': 'Vanguard S&P 500 ETF',
-        'XLK': 'Invests in technology companies within the S&P 500, including sectors like software and IT services.',            
-        'CPNG':  'Invests in e-commerce company known as the Amazon of South Korea',
-        'SOFI': 'Invests in fintech and finance technology solutions',
-        'JAAA': 'Invests in high-quality collateralized loan obligations (CLOs)',
-        'BLOK': 'Invests in companies involved in blockchain and data-sharing technologies'
+        'XLK': 'Tech sector ETF (S&P 500 tech companies)',
+        'CPNG': 'Coupang — South Korea e-commerce',
+        'SOFI': 'SoFi Technologies — fintech solutions',
+        'JAAA': 'Janus Henderson AAA CLO ETF',
+        'BLOK': 'Amplify Transformational Data Sharing ETF (Blockchain exposure)'
     }
 
-    my_stocks = list(etfs.keys())
-    benchmark = '^GSPC'  # S&P 500 as reference
-    st.write(f"my stocks: {my_stocks} + benchmark")
-    
-    # Download historical prices for all tickers + benchmark
-    # ech = yf.download(my_stocks + [benchmark], start=lookback_date, end=today)['Adj Close']
+    symbols = list(etfs.keys())
+    benchmark = "^GSPC"
+    all_symbols = symbols + [benchmark]
 
-    # # Show full table
-    # st.dataframe(ech)
+    st.write(f"📊 Fetching data for: {', '.join(symbols)} + benchmark ({benchmark})")
 
-    # # Loop through each ticker individually
-    # for ticker in my_stocks:
-    #     st.subheader(f"{ticker} - {etfs[ticker]}")
-    #     st.line_chart(ech[[ticker, benchmark]])  # Plot ticker vs S&P 500
+    # Download price data
+    data = yf.download(all_symbols, start=lookback_date, end=today)['Adj Close']
+
+    returns = (data.iloc[-1] / data.iloc[0] - 1) * 100
+    daily_change = (data.iloc[-1] / data.iloc[-2] - 1) * 100
+
+    # --- Create or update table ---
+    with conn.cursor() as cur:
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS main_schema.investment_pulse (
+            symbol TEXT PRIMARY KEY,
+            name TEXT,
+            current_price NUMERIC,
+            one_year_return NUMERIC,
+            daily_change NUMERIC,
+            market_cap BIGINT,
+            pe_ratio NUMERIC,
+            dividend_yield NUMERIC,
+            fifty_two_week_high NUMERIC,
+            fifty_two_week_low NUMERIC,
+            last_updated TIMESTAMP DEFAULT NOW()
+        );
+        """)
+
+        # --- Insert or update each ETF ---
+        for symbol in symbols:
+            ticker = yf.Ticker(symbol)
+            info = ticker.info or {}
+
+            current_price = round(data.iloc[-1][symbol], 2)
+            one_year_return = round(returns[symbol], 2)
+            daily_chg = round(daily_change[symbol], 2)
+            market_cap = info.get("marketCap")
+            pe_ratio = info.get("trailingPE")
+            dividend_yield = info.get("dividendYield")
+            high_52 = info.get("fiftyTwoWeekHigh")
+            low_52 = info.get("fiftyTwoWeekLow")
+
+            cur.execute("""
+            INSERT INTO main_schema.investment_pulse (
+                symbol, name, current_price, one_year_return, daily_change,
+                market_cap, pe_ratio, dividend_yield, fifty_two_week_high,
+                fifty_two_week_low
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (symbol)
+            DO UPDATE SET
+                name = EXCLUDED.name,
+                current_price = EXCLUDED.current_price,
+                one_year_return = EXCLUDED.one_year_return,
+                daily_change = EXCLUDED.daily_change,
+                market_cap = EXCLUDED.market_cap,
+                pe_ratio = EXCLUDED.pe_ratio,
+                dividend_yield = EXCLUDED.dividend_yield,
+                fifty_two_week_high = EXCLUDED.fifty_two_week_high,
+                fifty_two_week_low = EXCLUDED.fifty_two_week_low,
+                last_updated = NOW();
+            """, (
+                symbol, etfs[symbol], current_price, one_year_return, daily_chg,
+                market_cap, pe_ratio, dividend_yield, high_52, low_52
+            ))
+
+        conn.commit()  # ✅ commit after all inserts
+
+    st.success("✅ Investment pulse successfully written to NeonDB!")
+
+    # --- Optional: read back results to confirm ---
+    df = pd.read_sql("SELECT * FROM main_schema.investment_pulse ORDER BY one_year_return DESC;", conn)
+    st.dataframe(df)
+    st.write("Data last updated:", df['last_updated'].max())
