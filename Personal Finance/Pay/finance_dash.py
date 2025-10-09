@@ -4,7 +4,7 @@ import numpy as np
 import psycopg2
 import plotly.express as px
 import plotly.graph_objects as go
-import grocery_dash # bill_dash, investment_dash
+import grocery_dash, bill_dash, investment_dash
 
 # --- Global Database connection ---
 @st.cache_resource
@@ -43,9 +43,9 @@ if page == "Grocery Habits":
 elif page == "Bill History":
     st.header("💳 Bill History")
     st.write("This page shows your bills, payments, and trends over time.")
-    # bill_dash.app(conn)
+    bill_dash.app(conn)
 
 elif page == "Investment Overview":
     st.header("📈 Investment Overview")
     st.write("This page shows your ETFs, stocks, and investment performance.")
-    # investment_dash.app(conn)
+    investment_dash.app()

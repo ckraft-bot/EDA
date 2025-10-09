@@ -5,7 +5,7 @@ from datetime import date
 from finance_dash import conn  # ✅ uses the global cached connection
 
 
-def investment_dashboard():
+def app():
     st.title("📈 Investment Overview")
 
     today = date.today()
