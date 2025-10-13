@@ -144,7 +144,7 @@ WHERE EXTRACT(YEAR FROM date) = 2025
 
 
 -- GROCERY 
--- places shopped by frequency in all years, popularity
+-- 1. places shopped by frequency in all years, popularity
 SELECT 
     store,
     COUNT(*) AS visit_count,
@@ -156,7 +156,7 @@ GROUP BY store
 ORDER BY visit_count DESC;
 
 
--- times shopped year over year 
+-- 2. times shopped year over year 
 SELECT 
     EXTRACT(YEAR FROM date) AS year,
     COUNT(*) AS visit_count,
@@ -166,8 +166,7 @@ FROM main_schema."grocery_expenses"
 GROUP BY year
 ORDER BY year;
 
--- Yearly spending sum year-over-year
-
+-- 3. Yearly spending sum year-over-year
 SELECT
     EXTRACT(YEAR FROM date) AS year,
     SUM(money_spent) AS total_spent
@@ -175,7 +174,7 @@ FROM main_schema."grocery_expenses"
 GROUP BY year
 ORDER BY year;
 
--- Monthly spending habits year-over-year
+-- 4. Monthly spending habits year-over-year
 SELECT
     EXTRACT(YEAR FROM date) AS year,
     month,
@@ -186,7 +185,7 @@ FROM main_schema."grocery_expenses"
 GROUP BY year, month
 ORDER BY month, year;
 
--- Monthly spending habits by store, year-over-year
+-- 5. Monthly spending habits by store, year-over-year
 -- only include rows where each store has data for that month across all three years
 WITH store_months_with_all_years AS (
     SELECT 
