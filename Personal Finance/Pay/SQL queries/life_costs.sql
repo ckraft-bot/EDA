@@ -155,7 +155,6 @@ FROM main_schema."grocery_expenses"
 GROUP BY store
 ORDER BY visit_count DESC;
 
-
 -- 2. times shopped year over year 
 SELECT 
     EXTRACT(YEAR FROM date) AS year,

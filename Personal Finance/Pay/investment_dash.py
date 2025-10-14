@@ -5,7 +5,7 @@ from datetime import date
 from finance_dash import conn  # Global cached NeonDB connection
 
 
-def app():
+def app(conn):
     today = date.today()
     lookback_years = 1
     lookback_date = date(today.year - lookback_years, today.month, today.day)
