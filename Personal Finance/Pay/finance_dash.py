@@ -27,6 +27,7 @@ def get_connection():
         )
         conn.autocommit = True
         return conn
+    
     except psycopg2.Error as e:
         st.error(f"❌ Database connection failed: {e}")
         st.stop()
