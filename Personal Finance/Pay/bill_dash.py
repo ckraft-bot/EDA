@@ -8,27 +8,27 @@ from datetime import datetime, timedelta
 
 # --- Cached data functions ---
 @st.cache_data(ttl=3600)
-def get_categories(conn):
+def get_categories(_conn): # The underscore tells Streamlit, “don’t try to hash this parameter.” It still passes the _connection object into the function but is ignored for caching purposes.
     query = """
         SELECT DISTINCT category
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         WHERE category IS NOT NULL
         ORDER BY category;
     """
-    return pd.read_sql(query, conn)['category'].tolist()
+    return pd.read_sql(query, _conn)['category'].tolist()
 
 @st.cache_data(ttl=3600)
-def get_years(conn):
+def get_years(_conn):
     query = """
         SELECT DISTINCT EXTRACT(YEAR FROM date)::INT AS year
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         ORDER BY year DESC;
     """
-    return pd.read_sql(query, conn)['year'].tolist()
+    return pd.read_sql(query, _conn)['year'].tolist()
 
-def app(conn):
-    categories = get_categories(conn)
-    years = get_years(conn)
+def app(_conn):
+    categories = get_categories(_conn)
+    years = get_years(_conn)
 
     # --- Filters ---
     st.markdown("### Filters")
@@ -64,11 +64,11 @@ def app(conn):
             ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount,
             MIN(date) AS earliest_date,
             MAX(date) AS latest_date
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         {where_clause};
     """
 
-    df_summary = pd.read_sql(query_summary, conn, params=params)
+    df_summary = pd.read_sql(query_summary, _conn, params=params)
 
     if df_summary.empty or df_summary['total_bills'].iloc[0] == 0:
         st.info("No bills found for selected filters.")
@@ -94,13 +94,13 @@ def app(conn):
             COUNT(*) AS bill_count,
             ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
             ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         {where_clause}
         GROUP BY category
         ORDER BY total_amount DESC;
     """
 
-    df_category = pd.read_sql(query_category, conn, params=params)
+    df_category = pd.read_sql(query_category, _conn, params=params)
 
     fig_category = px.pie(
         df_category,
@@ -132,13 +132,13 @@ def app(conn):
             EXTRACT(MONTH FROM date)::INT AS month,
             ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
             COUNT(*) AS bill_count
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         {where_clause}
         GROUP BY year, month
         ORDER BY year, month;
     """
 
-    df_monthly = pd.read_sql(query_monthly, conn, params=params)
+    df_monthly = pd.read_sql(query_monthly, _conn, params=params)
 
     fig_monthly = px.line(
         df_monthly,
@@ -162,13 +162,13 @@ def app(conn):
             ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
             COUNT(*) AS bill_count,
             ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         {where_clause}
         GROUP BY year
         ORDER BY year;
     """
 
-    df_yoy = pd.read_sql(query_yoy, conn, params=params)
+    df_yoy = pd.read_sql(query_yoy, _conn, params=params)
 
     fig_yoy = px.bar(
         df_yoy,
@@ -203,13 +203,13 @@ def app(conn):
             description,
             ROUND(amount::NUMERIC, 2) AS amount,
             paid
-        FROM main_schema."bills"
+        FROM main_schema."life_expenses"
         {where_clause}
         ORDER BY date DESC
         LIMIT 20;
     """
 
-    df_recent = pd.read_sql(query_recent, conn, params=params)
+    df_recent = pd.read_sql(query_recent, _conn, params=params)
 
     st.dataframe(
         df_recent.rename(columns={
