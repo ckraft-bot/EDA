@@ -82,8 +82,8 @@ def app(_conn):
         st.metric("Total Amount", f"${df_summary['total_amount'].iloc[0]:,.2f}")
     with col3:
         st.metric("Average Bill", f"${df_summary['avg_amount'].iloc[0]:,.2f}")
-    with col4:
-        st.metric("Date Range", f"{df_summary['earliest_date'].iloc[0].strftime('%Y-%m-%d')} to {df_summary['latest_date'].iloc[0].strftime('%Y-%m-%d')}")
+    # with col4:
+    #     st.metric("Date Range", f"{df_summary['earliest_date'].iloc[0].strftime('%Y-%m-%d')} to {df_summary['latest_date'].iloc[0].strftime('%Y-%m-%d')}")
 
     # --- SECTION 2: Bills by Category ---
     st.markdown("## 📊 Spending by Category")
