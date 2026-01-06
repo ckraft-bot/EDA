@@ -60,8 +60,8 @@ def app(_conn):
     query_summary = f"""
         SELECT
             COUNT(*) AS total_bills,
-            ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
-            ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount,
+            ROUND(SUM(payment_amount)::NUMERIC, 2) AS total_amount,
+            ROUND(AVG(payment_amount)::NUMERIC, 2) AS avg_amount,
             MIN(date) AS earliest_date,
             MAX(date) AS latest_date
         FROM main_schema."life_expenses"
@@ -92,8 +92,8 @@ def app(_conn):
         SELECT
             category,
             COUNT(*) AS bill_count,
-            ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
-            ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount
+            ROUND(SUM(payment_amount)::NUMERIC, 2) AS total_amount,
+            ROUND(AVG(payment_amount)::NUMERIC, 2) AS avg_amount
         FROM main_schema."life_expenses"
         {where_clause}
         GROUP BY category
@@ -130,12 +130,16 @@ def app(_conn):
         SELECT
             EXTRACT(YEAR FROM date)::INT AS year,
             EXTRACT(MONTH FROM date)::INT AS month,
-            ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
+            ROUND(SUM(payment_amount)::NUMERIC, 2) AS total_amount,
             COUNT(*) AS bill_count
         FROM main_schema."life_expenses"
         {where_clause}
-        GROUP BY year, month
-        ORDER BY year, month;
+        GROUP BY
+            EXTRACT(YEAR FROM date)::INT,
+            EXTRACT(MONTH FROM date)::INT
+        ORDER BY
+            EXTRACT(YEAR FROM date)::INT,
+            EXTRACT(MONTH FROM date)::INT;
     """
 
     df_monthly = pd.read_sql(query_monthly, _conn, params=params)
@@ -159,13 +163,14 @@ def app(_conn):
     query_yoy = f"""
         SELECT
             EXTRACT(YEAR FROM date)::INT AS year,
-            ROUND(SUM(amount)::NUMERIC, 2) AS total_amount,
             COUNT(*) AS bill_count,
-            ROUND(AVG(amount)::NUMERIC, 2) AS avg_amount
+            ROUND(SUM(payment_amount)::NUMERIC, 2) AS total_amount,
+            ROUND(AVG(payment_amount)::NUMERIC, 2) AS avg_amount
         FROM main_schema."life_expenses"
-        {where_clause}
-        GROUP BY year
-        ORDER BY year;
+        WHERE EXTRACT(YEAR FROM date)::INT IN (%s, %s)
+        AND category IN (%s, %s, %s, %s, %s)
+        GROUP BY EXTRACT(YEAR FROM date)::INT
+        ORDER BY EXTRACT(YEAR FROM date)::INT;
     """
 
     df_yoy = pd.read_sql(query_yoy, _conn, params=params)
@@ -197,16 +202,19 @@ def app(_conn):
     st.markdown("## 📋 Recent Bills")
 
     query_recent = f"""
-        SELECT
+        SELECT DISTINCT ON (category, payment_for, payment_to)
             date,
             category,
-            description,
-            ROUND(amount::NUMERIC, 2) AS amount,
-            paid
-        FROM main_schema."life_expenses"
+            payment_for,
+            payment_to,
+            ROUND(payment_amount::NUMERIC, 2) AS payment_amount
+        FROM main_schema.life_expenses
         {where_clause}
-        ORDER BY date DESC
-        LIMIT 20;
+        ORDER BY
+            category,
+            payment_for,
+            payment_to,
+            date DESC;
     """
 
     df_recent = pd.read_sql(query_recent, _conn, params=params)
@@ -215,9 +223,9 @@ def app(_conn):
         df_recent.rename(columns={
             'date': 'Date',
             'category': 'Category',
-            'description': 'Description',
-            'amount': 'Amount ($)',
-            'paid': 'Paid'
+            'payment_for': 'Payment For',
+            'payment_to': 'Payment To',
+            'payment_amount': 'Amount ($)',
         }).style.format({'Amount ($)': '${:,.2f}'}),
         use_container_width=True,
         hide_index=True
