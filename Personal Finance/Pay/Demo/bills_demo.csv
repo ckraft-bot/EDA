@@ -1,0 +1,102 @@
+Date,Month,Payment_for,Payment_to,Payment_from,Payment_amount
+1/1/2023,1,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,74.57
+2/1/2023,2,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,88.24
+3/1/2023,3,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,100.78
+4/1/2023,4,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,100.08
+5/1/2023,5,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,95.47
+6/1/2023,6,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,95.47
+7/1/2023,7,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,95.47
+8/1/2023,8,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,95.46
+9/1/2023,9,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,119.09
+10/1/2023,10,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,119.09
+11/1/2023,11,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,124.17
+12/1/2023,12,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,124.17
+1/1/2024,1,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,102.79
+2/1/2024,2,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,102.79
+3/1/2024,3,Auto Insurance,Axle Trust Insurnce Co,Checking 0000,120.22
+3/4/2024,3,Entertainment,Climbing Gym,Checking 0000,84
+3/17/2024,3,Entertainment,Climbing Gym,Credit Card 0001,6.5
+11/1/2023,11,Entertainment,Climbing Gym,Credit Card 0002,40
+12/28/2023,12,Entertainment,Climbing Gym,Credit Card 0002,95
+11/3/2023,11,Entertainment,Climbing Gym,Credit Card 0002,95
+5/3/2023,5,Sewer,Drain Dynamo,Checking 0000,36.36
+5/31/2023,5,Sewer,Drain Dynamo,Checking 0000,38
+6/8/2023,6,Sewer,Drain Dynamo,Checking 0000,24.91
+7/13/2023,7,Sewer,Drain Dynamo,Checking 0000,24.91
+8/10/2023,8,Sewer,Drain Dynamo,Checking 0000,24.91
+9/14/2023,9,Sewer,Drain Dynamo,Checking 0000,24.91
+10/12/2023,10,Sewer,Drain Dynamo,Checking 0000,24.91
+11/9/2023,11,Sewer,Drain Dynamo,Checking 0000,25.5
+12/18/2023,12,Sewer,Drain Dynamo,Checking 0000,26.41
+1/11/2024,1,Sewer,Drain Dynamo,Checking 0000,35.98
+2/8/2024,2,Sewer,Drain Dynamo,Checking 0000,115.65
+3/7/2024,3,Sewer,Drain Dynamo,Checking 0000,154.2
+5/8/2023,5,Water,Hydro Harmony,Checking 0000,36.69
+6/5/2023,6,Water,Hydro Harmony,Checking 0000,20.65
+7/5/2023,7,Water,Hydro Harmony,Checking 0000,21.02
+8/7/2023,8,Water,Hydro Harmony,Checking 0000,21.22
+9/11/2023,9,Water,Hydro Harmony,Checking 0000,20.98
+10/11/2023,10,Water,Hydro Harmony,Checking 0000,20.79
+11/6/2023,11,Water,Hydro Harmony,Checking 0000,20.23
+12/5/2023,12,Water,Hydro Harmony,Checking 0000,20.58
+1/4/2024,1,Water,Hydro Harmony,Checking 0000,21.39
+2/5/2024,2,Water,Hydro Harmony,Checking 0000,70.97
+3/4/2024,3,Water,Hydro Harmony,Checking 0000,132.71
+8/9/2023,8,Entertainment,Netflix,Credit Card 0002,16.96
+9/9/2023,9,Entertainment,Netflix,Credit Card 0002,16.96
+10/9/2023,10,Entertainment,Netflix,Credit Card 0002,16.96
+11/9/2023,11,Entertainment,Netflix,Credit Card 0002,16.96
+12/9/2023,12,Entertainment,Netflix,Credit Card 0002,16.96
+1/9/2024,1,Entertainment,Netflix,Credit Card 0002,16.96
+2/9/2024,2,Entertainment,Netflix,Credit Card 0002,16.96
+3/9/2024,3,Entertainment,Netflix,Credit Card 0002,16.96
+5/23/2023,5,Entertainment,Piano,Credit Card 0002,495
+4/4/2023,4,Wifi,Signal Sphere Services,Checking 0000,47.99
+5/8/2023,5,Wifi,Signal Sphere Services,Checking 0000,10
+5/16/2023,5,Wifi,Signal Sphere Services,Checking 0000,21.86
+6/6/2023,6,Wifi,Signal Sphere Services,Checking 0000,36.13
+7/10/2023,7,Wifi,Signal Sphere Services,Checking 0000,57.99
+8/7/2023,8,Wifi,Signal Sphere Services,Checking 0000,57.99
+9/6/2023,9,Wifi,Signal Sphere Services,Checking 0000,57.99
+10/6/2023,10,Wifi,Signal Sphere Services,Checking 0000,57.99
+11/7/2023,11,Wifi,Signal Sphere Services,Checking 0000,57.99
+12/7/2023,12,Wifi,Signal Sphere Services,Checking 0000,57.99
+1/4/2024,1,Wifi,Signal Sphere Services,Checking 0000,57.99
+2/7/2024,2,Wifi,Signal Sphere Services,Checking 0000,57.99
+3/7/2024,3,Wifi,Signal Sphere Services,Checking 0000,57.99
+5/1/2023,5,Mortgage,Stellar Key,Checking 0000,1988.87
+6/1/2023,6,Mortgage,Stellar Key,Checking 0000,1988.87
+7/5/2023,7,Mortgage,Stellar Key,Checking 0000,1988.87
+8/1/2023,8,Mortgage,Stellar Key,Checking 0000,1988.87
+9/1/2023,9,Mortgage,Stellar Key,Checking 0000,1988.87
+10/2/2023,10,Mortgage,Stellar Key,Checking 0000,1988.87
+11/1/2023,11,Mortgage,Stellar Key,Checking 0000,1988.87
+12/6/2023,12,Mortgage,Stellar Key,Checking 0000,1988.87
+1/2/2024,1,Mortgage,Stellar Key,Checking 0000,1988.87
+2/1/2024,2,Mortgage,Stellar Key,Checking 0000,1988.87
+3/4/2024,3,Mortgage,Stellar Key,Checking 0000,1988.87
+3/17/2023,3,Home Insurance,USAA,Checking 0000,1272.42
+2/21/2024,2,Home Insurance,USAA,Checking 0000,1240.61
+1/1/2023,1,Renters Insurance,USAA,Checking 0000,9.23
+2/1/2023,2,Renters Insurance,USAA,Checking 0000,10.92
+3/1/2023,3,Renters Insurance,USAA,Checking 0000,10.92
+2/28/2023,2,Phone,Verizon,Checking 0000,38
+3/31/2023,3,Phone,Verizon,Checking 0000,38
+5/1/2023,5,Phone,Verizon,Checking 0000,38
+5/31/2023,5,Phone,Verizon,Checking 0000,38
+6/30/2023,6,Phone,Verizon,Checking 0000,38
+7/31/2023,7,Phone,Verizon,Checking 0000,38
+1/22/2024,1,Phone,Verizon,Checking 0000,227
+3/18/2024,3,Phone,Verizon,Checking 0000,34
+5/31/2023,5,Electricity,Volt Energy Solutions,Checking 0000,1.66
+7/3/2023,7,Electricity,Volt Energy Solutions,Checking 0000,103.78
+8/1/2023,8,Electricity,Volt Energy Solutions,Checking 0000,91.8
+8/31/2023,8,Electricity,Volt Energy Solutions,Checking 0000,88.39
+10/2/2023,10,Electricity,Volt Energy Solutions,Checking 0000,82.77
+11/1/2023,11,Electricity,Volt Energy Solutions,Checking 0000,45.66
+12/4/2023,12,Electricity,Volt Energy Solutions,Checking 0000,42.47
+1/2/2024,1,Electricity,Volt Energy Solutions,Checking 0000,68.82
+2/1/2024,2,Electricity,Volt Energy Solutions,Checking 0000,142.26
+3/1/2024,3,Electricity,Volt Energy Solutions,Checking 0000,217.97
+11/4/2023,11,Entertainment,Xbox,Credit Card 0002,18.56
+12/4/2023,12,Entertainment,Xbox,Credit Card 0002,16.99
