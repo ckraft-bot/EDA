@@ -166,9 +166,8 @@ def app(_conn):
             COUNT(*) AS bill_count,
             ROUND(SUM(payment_amount)::NUMERIC, 2) AS total_amount,
             ROUND(AVG(payment_amount)::NUMERIC, 2) AS avg_amount
-        FROM main_schema."life_expenses"
-        WHERE EXTRACT(YEAR FROM date)::INT IN (%s, %s)
-        AND category IN (%s, %s, %s, %s, %s)
+        FROM main_schema.life_expenses
+        {where_clause}
         GROUP BY EXTRACT(YEAR FROM date)::INT
         ORDER BY EXTRACT(YEAR FROM date)::INT;
     """
