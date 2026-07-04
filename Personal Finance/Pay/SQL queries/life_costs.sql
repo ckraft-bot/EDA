@@ -51,7 +51,7 @@ WITH categorized AS (
       WHEN PAYMENT_FOR IN ('House Loan A', 'House Loan B') THEN 'Mortgage'
       
       -- Subscriptions
-      WHEN PAYMENT_FOR IN ('Study', 'Entertainment', 'Dev', 'Hobby', 'iCloud+', 'Streaming', 'Printer') THEN 'Subscriptions'
+      WHEN PAYMENT_FOR IN ('Apple iCloud+', 'Dev', 'Entertainment', 'Hobby', 'Printer', 'Streaming', 'Study') THEN 'Subscriptions'
       
       -- Utilities
       WHEN PAYMENT_FOR IN ('Electricity', 'Water', 'Wifi', 'Sewar') THEN 'Utilities'
@@ -59,26 +59,27 @@ WITH categorized AS (
       ELSE CATEGORY 
     END AS CATEGORY_NAME
   FROM main_schema."life_expenses"
-  WHERE PAYMENT_FOR IN (
-    'Rent', 
-    'Phone', 
-    'HOA dues', 
-    'House Loan A', 
-    'House Loan B',
-    'Electricity',
-    'Water',
-    'Wifi',
-    'Sewar',
-    'Home Insurance',
-    'Renters Insurance',
-    'Auto Insurance',
-    'Study',
-    'Entertainment',
-    'Dev',
-    'Hobby',
-    'iCloud+',
-    'Streaming',
-    'Printer'
+  WHERE payment_for IN (
+      'Apple iCloud+',
+      'Apt Application Fee',
+      'Auto Insurance',
+      'Dev',
+      'Electricity',
+      'Entertainment',
+      'HOA dues',
+      'Hobby',
+      'Home Insurance',
+      'House Loan A',
+      'House Loan B',
+      'Phone',
+      'Printer',
+      'Rent',
+      'Renters Insurance',
+      'Sewer',
+      'Streaming',
+      'Study',
+      'Water',
+      'Wifi'
   )
 )
 SELECT
@@ -116,13 +117,13 @@ ORDER BY
   year,
   month;
 
--- 4. Total paid per month in current year (2025)
+-- 4. Total paid per month in current year (2026)
 SELECT 
   EXTRACT(YEAR FROM date) AS year,
   EXTRACT(MONTH FROM date) AS month,
   SUM(payment_amount) AS paid
 FROM main_schema."life_expenses"
-WHERE EXTRACT(YEAR FROM date) = 2025
+WHERE EXTRACT(YEAR FROM date) = 2026
 GROUP BY 
   EXTRACT(YEAR FROM date),
   EXTRACT(MONTH FROM date)
@@ -137,7 +138,7 @@ SELECT
     payment_to,
     payment_amount
 FROM main_schema."life_expenses"
-WHERE EXTRACT(YEAR FROM date) = 2025
+WHERE EXTRACT(YEAR FROM date) = 2026
   AND EXTRACT(MONTH FROM date) = 2
   ORDER BY payment_amount DESC;
 
@@ -191,7 +192,7 @@ WITH store_months_with_all_years AS (
         store,
         month
     FROM main_schema."grocery_expenses"
-    WHERE EXTRACT(YEAR FROM date) IN (2023, 2024, 2025)
+    WHERE EXTRACT(YEAR FROM date) IN (2024, 2025, 2026)
     GROUP BY store, month
     HAVING COUNT(DISTINCT EXTRACT(YEAR FROM date)) = 3
 )
@@ -206,7 +207,7 @@ JOIN store_months_with_all_years s
   ON g.store = s.store
   AND g.month = s.month
 WHERE g.store IN ('Food City', 'AFG', 'Walmart')
-  AND EXTRACT(YEAR FROM g.date) IN (2023, 2024, 2025)
+  AND EXTRACT(YEAR FROM g.date) IN (2024, 2025, 2026)
 GROUP BY g.store, year, g.month
 ORDER BY g.store, g.month, year;
 
